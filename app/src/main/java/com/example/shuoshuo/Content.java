@@ -11,30 +11,50 @@ import cn.bmob.v3.BmobObject;
  * Created by 29208 on 2018/10/1.
  */
 public class Content extends BmobObject {
-    private int imageId;
-    private int content;
+//    private String  imageUrl=null;
+    private List<String>imageUrlList=new ArrayList<>();
+    private String title=" ";
+    private int countZan=0;
+    private List<String> commitList=new ArrayList<>();
 
-
-    Content(int imageId,int content){
-        this.imageId=imageId;
-        this.content=content;
+    public  Content(){}
+    public Content(List<String>imageUrlList,String title,int countZan,List<String> commitlist){
+        this.imageUrlList=imageUrlList;
+        this.title=title;
+        this.countZan=countZan;
+        this.commitList=commitlist;
 
     }
-    Content (){}
 
-    public int getImageId() {
-        return imageId;
+    public List<String> getImageUrlList() {
+        return imageUrlList;
     }
 
-    public int  getContent() {
-        return content;
+    public void setImageUrlList(List<String> imageUrlList) {
+        this.imageUrlList = imageUrlList;
     }
 
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
+    public String getTitle() {
+        return title;
     }
 
-    public void setContent(int  content) {
-        this.content = content;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getCountZan() {
+        return countZan;
+    }
+
+    public void setCountZan(int countZan) {
+        this.countZan = countZan;
+    }
+
+    public List<String> getCommitList() {
+        return commitList;
+    }
+
+    public void setCommitList(List<String> commitList) {
+        this.commitList = commitList;
     }
 }

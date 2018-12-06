@@ -1,13 +1,11 @@
 package com.example.shuoshuo;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -31,7 +29,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHold
     @Override//用于创建ViewHolder实例
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recycler_fragment_item,parent,false);
+                .inflate(R.layout.shsuoshuo_recyclerview_item,parent,false);
 //    private LinearLayout ll=view.findViewById(R.id.itemview);
 //
         final ViewHolder holder=new ViewHolder(view);//定义一个ViewHolder
