@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">shuoshuo</string>
+    <drawable name="clr_normal">@drawable/zan</drawable>
+    <drawable name="clr_pressed">@drawable/zan2</drawable>
 </resources>
