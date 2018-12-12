@@ -57,7 +57,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHold
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                notifyDataSetChanged();
+                notifyDataSetChanged();
                 int Position=holder.getAdapterPosition();
 
 //                Intent intent =new Intent (context,ContentActivity.class);
@@ -75,6 +75,11 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHold
 
     @Override//用于对RecyclerVIew子项进行赋值，自动调用，自动传入position也就是index
     public void onBindViewHolder(ViewHolder holder, int position) {
+
+
+
+
+
 //        Content content =mContentList.get(position);
 //        holder.contentImage.setImageResource(content.getImageId());
         Glide.with(context).load( R.drawable.item).into(holder.contentImage);
@@ -90,9 +95,10 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHold
 
         //倒序添加评论
         List<Comment>commentList=mContentList.get(position).getCommitList();
-        Log.d("adapter","commentlist="+commentList.size());
+        Log.d("adapter", "commentlist=" + commentList.size());
         holder.comment1.setText(commentList.get(commentList.size() - 1).getName() + "：" + commentList.get(commentList.size() - 1).getContent());
         holder.comment2.setText(commentList.get(commentList.size()-2).getName()+"："+commentList.get(commentList.size()-2).getContent());
+//        holder.comment2.setText(commentList.get(commentList.size()-2).getName()+"："+commentList.get(commentList.size()-2).getContent());
 //        holder.comment2.setText("2："+"您好");
 //        holder.comment3.setText("3："+"dhas");
 
@@ -144,9 +150,12 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHold
                 public void onClick(View v) {
                     if(zan.isSelected()){
                         zan.setSelected(false);
+
                     }
                     else{
                         zan.setSelected(true);
+                        mContentList.get(getAdapterPosition()).setCountZan(mContentList.get(getAdapterPosition()).getCountZan() + 1);
+                        countZan.setText(mContentList.get(getAdapterPosition()).getCountZan()+"人觉得很赞");
                     }
                 }
             });
@@ -168,6 +177,17 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHold
                             Log.d("adapter", "text=" + commentContent);
                             String myName = mContentList.get(getAdapterPosition()).getMyName();
                             mContentList.get(getAdapterPosition()).appendCommitList(new Comment(myName, commentContent));
+
+
+
+                            //瞬间刷新
+                            List<Comment>commentList=mContentList.get(getAdapterPosition()).getCommitList();
+                            comment1.setText(commentList.get(commentList.size() - 1).getName() + "：" + commentList.get(commentList.size() - 1).getContent());
+                            comment2.setText(commentList.get(commentList.size() - 2).getName() + "：" + commentList.get(commentList.size() - 2).getContent());
+
+
+
+
                             initComment(mContentList, context);
 
                         }
@@ -184,6 +204,8 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHold
 
 
         private void initComment(List<Content> contentList, final Context context){
+
+
 
             Content content=contentList.get(getAdapterPosition());
             String objId=content.getObjectId();

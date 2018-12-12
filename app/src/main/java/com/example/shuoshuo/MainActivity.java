@@ -1,7 +1,9 @@
     package com.example.shuoshuo;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Message;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +13,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 
+
+import com.example.shuoshuo.writeShuoSHuo.AddShuoShuo;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -36,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             switch (msg.what){
                 case 0:
                      contentList= (List<Content>) msg.obj;
-                    Log.d("MainActivity","contentList.size()=="+contentList.size());
+                    Log.d("MainActivity", "contentList.size()==" + contentList.size());
                     ContentAdapter  adapter=new ContentAdapter(contentList,MainActivity.this);
                     recyclerView.setAdapter(adapter);
 
@@ -60,6 +65,18 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("MainActivity", contentList.equals(null) + "==" + contentList.size());
 //        addData();
+
+        FloatingActionButton fab= (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this, AddShuoShuo.class);
+                startActivity(intent);
+
+            }
+        });
+
+
     }
 
     private void addData(){
