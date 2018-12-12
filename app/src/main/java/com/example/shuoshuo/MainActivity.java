@@ -1,5 +1,6 @@
     package com.example.shuoshuo;
 
+import android.app.Activity;
 import android.os.Message;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +10,7 @@ import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
-
+import android.view.LayoutInflater;
 
 
 import java.net.URL;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("MainActivity","contentList.size()=="+contentList.size());
                     ContentAdapter  adapter=new ContentAdapter(contentList,MainActivity.this);
                     recyclerView.setAdapter(adapter);
+
                     break;
             }
         }
@@ -51,23 +53,27 @@ public class MainActivity extends AppCompatActivity {
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 //        requestData();
-        Bmob.initialize(this, "0aa9c14b5406f384ecc21410d1968d8d");
+        Bmob.initialize(this, "00957be3d6e96745186f6a436b6fe2a2");
         requestData();
 //        ContentAdapter  adapter=new ContentAdapter(contentList,this);
 //        recyclerView.setAdapter(adapter);
 
-        Log.d("MainActivity",contentList.equals(null)+"=="+contentList.size());
+        Log.d("MainActivity", contentList.equals(null) + "==" + contentList.size());
 //        addData();
     }
 
-
     private void addData(){
-//        final Content content1=new Content("http://bmob-cdn-22722.b0.upaiyun.com/2018/12/07/65e5124f40dece4280eebb41355eb6ae.jpg",".Bmob(国产 移动后端服务) 数据存储 推送 短信 支付 即时通信 ",5, Arrays.asList("pinglun2", "pingluin2", "pinglun2"),new Date().toString(),"罗3炮");
-//        final Content content2=new Content("http://bmob-cdn-22722.b0.upaiyun.com/2018/12/07/c02cefa6408abc618030f8a1d8aa3ba2.jpg",".Bmob(国产 移动后端服务) 数据存储 推送 短信 支付 即时通信 ",5, Arrays.asList("pinglun2", "pingluin2", "pinglun2"),new Date().toString(),"罗23/9炮");
+        List<Comment>list=new ArrayList<>();
+        list.add(new Comment("刘能","你傻啊"));
+        list.add(new Comment("赵四","你好，我叫赵四"));
+
+        final Content content1=new Content("侯金昌","http://www.ruanyifeng.com/blogimg/asset/2016/bg2016072208.png","http://bmob-cdn-22722.b0.upaiyun.com/2018/12/07/65e5124f40dece4280eebb41355eb6ae.jpg",".Bmob(国产 移动后端服务) 数据存储 推送 短信 支付 即时通信 ",5,list,new Date().toString(),"罗3炮");
+//        final Content content2=new Content("houjinchang","http://bmob-cdn-22722.b0.upaiyun.com/2018/12/07/c02cefa6408abc618030f8a1d8aa3ba2.jpg",".Bmob(国产 移动后端服务) 数据存储 推送 短信 支付 即时通信 ",5, list,new Date().toString(),"罗23/9炮");
 //        final Content content3=new Content("http://bmob-cdn-22722.b0.upaiyun.com/2018/12/07/2c5d69cd40f7b92a804b12b4b7f2c6e2.jpg",".Bmob(国产 移动后端服务) 数据存储 推送 短信 支付 即时通信 ",5, Arrays.asList("pinglun2", "pingluin2", "pinglun2"),new Date().toString(),"罗887炮");
 //        final Content content4=new Content("http://bmob-cdn-22722.b0.upaiyun.com/2018/12/07/ee9be114400e79c280e941e7ecba33cd.jpg",".Bmob(国产 移动后端服务) 数据存储 推送 短信 支付 即时通信 ",5, Arrays.asList("pinglun2", "pingluin2", "pinglun2"),new Date().toString(),"罗34炮");
 //        final Content content5=new Content("http://bmob-cdn-22722.b0.upaiyun.com/2018/12/07/cea60a2e40cad06f80794d215c24838f.jpeg",".Bmob(国产 移动后端服务) 数据存储 推送 短信 支付 即时通信 ",5, Arrays.asList("pinglun2", "pingluin2", "pinglun2"),new Date().toString(),"罗45炮");
-//        content1.save();
+        content1.save();
+
 //        content2.save();
 //        content3.save();
 //        content4.save();
@@ -92,8 +98,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
 
 

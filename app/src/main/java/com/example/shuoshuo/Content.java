@@ -16,12 +16,17 @@ public class Content extends BmobObject {
 //    private List<String>imageUrlList=new ArrayList<>();
     private String title=" ";
     private int countZan=0;
-    private List<String> commitList=new ArrayList<>();
+    private List<Comment> commitList=new ArrayList<Comment>();
+
     private String time;
     private String name;
+
+    Comment comment;
+    private String myName;
+
     private String personIcon;
     public  Content(){}
-    public Content(String personIcon,String  imageUrl,String title,int countZan,List<String> commitlist,String time,String name){
+    public Content(String myname,String personIcon,String  imageUrl,String title,int countZan,List<Comment> commitlist,String time,String name){
         this.imageUrl=imageUrl;
         this.title=title;
         this.countZan=countZan;
@@ -29,6 +34,15 @@ public class Content extends BmobObject {
         this.name=name;
         this.time=time;
         this.personIcon=personIcon;
+        this.myName=myname;
+    }
+
+    public String getMyName() {
+        return myName;
+    }
+
+    public void setMyName(String myName) {
+        this.myName = myName;
     }
 
     public String getPersonIcon() {
@@ -79,11 +93,14 @@ public class Content extends BmobObject {
         this.countZan = countZan;
     }
 
-    public List<String> getCommitList() {
+    public List<Comment> getCommitList() {
         return commitList;
     }
 
-    public void setCommitList(List<String> commitList) {
+    public void setCommitList(List<Comment> commitList) {
         this.commitList = commitList;
+    }
+    public void appendCommitList(Comment c){
+        commitList.add(c);
     }
 }
