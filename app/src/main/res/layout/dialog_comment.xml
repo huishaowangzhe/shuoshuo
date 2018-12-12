@@ -6,8 +6,7 @@
     android:id="@+id/dialog"
     >
     <EditText
-        android:hint="qiefjka"
-        android:text="ewewf"
+        android:hint="写下你的评论吧"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/comment_enditext"

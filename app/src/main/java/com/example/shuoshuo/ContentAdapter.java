@@ -155,7 +155,9 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHold
                     else{
                         zan.setSelected(true);
                         mContentList.get(getAdapterPosition()).setCountZan(mContentList.get(getAdapterPosition()).getCountZan() + 1);
-                        countZan.setText(mContentList.get(getAdapterPosition()).getCountZan()+"人觉得很赞");
+                        countZan.setText(mContentList.get(getAdapterPosition()).getCountZan() + "人觉得很赞");
+                        Toast.makeText(context,"点赞成功",Toast.LENGTH_SHORT).show();
+                        initComment(mContentList, context);
                     }
                 }
             });
@@ -168,8 +170,8 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHold
                     Toast.makeText(context, "comment", Toast.LENGTH_SHORT).show();
 
                      AlertDialog.Builder builder=new AlertDialog.Builder(context);
-                    builder.setTitle("自定义布局").setView(view).setNegativeButton("取消", null);
-                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    builder.setTitle("写评论").setView(view).setNegativeButton("取消", null);
+                    builder.setPositiveButton("发送", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             String commentContent = text.getText().toString().trim();
@@ -187,7 +189,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHold
 
 
 
-
+                            Toast.makeText(context,"评论成功",Toast.LENGTH_SHORT).show();
                             initComment(mContentList, context);
 
                         }
@@ -213,7 +215,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHold
                 @Override
                 public void done(BmobException e) {
                     if(e==null){
-                        Toast.makeText(context,"评论成功",Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context,"评论成功",Toast.LENGTH_SHORT).show();
                     }
                 }
             });
