@@ -86,6 +86,33 @@ public class AddShuoShuo extends AppCompatActivity {
         });
     }
 
+
+
+    /**
+     * 照片裁剪
+     * @param uri
+     */
+    private void crop(Uri uri) {
+        // 裁剪图片意图
+        Log.d("write","crop");
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", "true");
+        // 裁剪框的比例，1：1
+        intent.putExtra("aspectX", 2);
+        intent.putExtra("aspectY", 1);
+        // 裁剪后输出图片的尺寸大小
+        intent.putExtra("outputX", 400);
+        intent.putExtra("outputY", 200);
+        // 图片格式
+        intent.putExtra("outputFormat", "JPEG");
+//        intent.putExtra("return_data",true);
+//        intent.putExtra("noFaceDetection", true);// 取消人脸识别
+        intent.putExtra("return-data", true);// true:不返回uri，false：返回uri
+        startActivityForResult(intent, 120);
+    }
+
     private void openAlbum(){//选择图片，解析函数接力intent
         Intent intent=new Intent("android.intent.action.GET_CONTENT");
         intent.setType("image/*");//means:选择图片
@@ -113,6 +140,7 @@ public class AddShuoShuo extends AppCompatActivity {
             case TAKE_PHOTO:
                 if(resultCode==RESULT_OK){
                     try{//解析uri生成BitMap对象，，，，，BItMap对象可以直接设置图片
+                        crop(ImageUri);
                         Bitmap bitmap= BitmapFactory.decodeStream(getContentResolver().openInputStream(ImageUri));
                         picture.setImageBitmap(bitmap);
                     }catch(FileNotFoundException e){
@@ -121,6 +149,8 @@ public class AddShuoShuo extends AppCompatActivity {
 
                 }
                 break;
+
+
             case CHOOSE_PHOTO:
                 if(resultCode==RESULT_OK){
                     //判断手机型号
@@ -156,6 +186,7 @@ public class AddShuoShuo extends AppCompatActivity {
             //如果是content类型的Uri，，，，使用普通方式处理
             imagePath=getImagePath(uri,null);
         }else if("file".equalsIgnoreCase(uri.getScheme())){
+
             imagePath=uri.getPath();//如果是文件类型的uri，，，直接就能够获得path，调用Uri.getPath()
         }
         displayImage(imagePath);
