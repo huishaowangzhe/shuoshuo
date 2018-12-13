@@ -16,7 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 
-import com.example.shuoshuo.writeShuoSHuo.AddShuoShuo;
+import com.example.shuoshuo.AddShuoShuo;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("MainActivity","into addShuoshuo");
                 Intent intent=new Intent(MainActivity.this, AddShuoShuo.class);
                 startActivity(intent);
 
