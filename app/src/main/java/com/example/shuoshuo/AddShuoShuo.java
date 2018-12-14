@@ -20,14 +20,24 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.shuoshuo.R;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.jar.Manifest;
+
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UploadFileListener;
 
 public class AddShuoShuo extends AppCompatActivity {
     private Button takephoto;
@@ -35,6 +45,8 @@ public class AddShuoShuo extends AppCompatActivity {
     public static  final int TAKE_PHOTO=1;//两个常量用于onActivityResult回调方法
     public static final int CHOOSE_PHOTO=2;
     private Uri ImageUri;//创建图片的uri对象
+    private Uri destinationUri;
+    private String ImagePath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -47,9 +59,10 @@ public class AddShuoShuo extends AppCompatActivity {
         takephoto.setOnClickListener(new View.OnClickListener() {//点击调用相机
             @Override
             public void onClick(View v) {
-                Log.d("AddShuoShuo","execuate");
+                Log.d("AddShuoShuo", "execuate");
                 //创建file对象,用于存储拍照后的照片
                 File outputImage = new File(getExternalCacheDir(), "output_image.jpg");
+                ImagePath="output_image.jpg";
                 try {//                      关联缓存目录
                     if (outputImage.exists()) {//看看文件是否已经存在，，，如果存在就删除
                         outputImage.delete();
@@ -84,34 +97,67 @@ public class AddShuoShuo extends AppCompatActivity {
                 }
             }
         });
+        findViewById(R.id.send).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                ImageTemp imageTemp=new ImageTemp();
+//                imageTemp.setImage(new BmobFile(new File(ImageUri+"")));
+//                imageTemp.save();
+                try{
+                    File outputImage = new File(getExternalCacheDir(), ImagePath);
+                    final BmobFile bmobFile=new BmobFile(outputImage);
+                    Log.d("file","bmobFile==null?"+(bmobFile==null));
+//                Log.d("AddShuoShuogetURL",ImageUri.toString());
+                    bmobFile.upload(new UploadFileListener() {
+                        @Override
+                        public void done(BmobException e) {
+                        Log.d("AddShuoShuogetURL", "e==null?" + (e == null));
+//                            e.printStackTrace();
+                            if (e == null) {
+                                Log.d("AddShuoShuogetURL", "" + bmobFile.getUrl());
+                                TextView text= (TextView) findViewById(R.id.item_content);
+                                String s=text.getText().toString();
+                                upload(bmobFile.getUrl(),s);
+
+                            }
+                        }
+                    });
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+        });
     }
 
 
 
-    /**
-     * 照片裁剪
-     * @param uri
-     */
-    private void crop(Uri uri) {
-        // 裁剪图片意图
-        Log.d("write","crop");
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.setDataAndType(uri, "image/*");
-        intent.putExtra("crop", "true");
-        // 裁剪框的比例，1：1
-        intent.putExtra("aspectX", 2);
-        intent.putExtra("aspectY", 1);
-        // 裁剪后输出图片的尺寸大小
-        intent.putExtra("outputX", 400);
-        intent.putExtra("outputY", 200);
-        // 图片格式
-        intent.putExtra("outputFormat", "JPEG");
-//        intent.putExtra("return_data",true);
-//        intent.putExtra("noFaceDetection", true);// 取消人脸识别
-        intent.putExtra("return-data", true);// true:不返回uri，false：返回uri
-        startActivityForResult(intent, 120);
-    }
+//    /**
+//     * 照片裁剪
+//     * @param uri
+//     */
+//    private void crop(Uri uri) {
+//        // 裁剪图片意图
+//        Log.d("write","crop");
+//        Intent intent = new Intent("com.android.camera.action.CROP");
+//        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//        intent.setDataAndType(uri, "image/*");
+//        intent.putExtra("crop", "true");
+//        // 裁剪框的比例，1：1
+//        intent.putExtra("aspectX", 2);
+//        intent.putExtra("aspectY", 1);
+//        // 裁剪后输出图片的尺寸大小
+//        intent.putExtra("outputX", 400);
+//        intent.putExtra("outputY", 200);
+//        // 图片格式
+//        intent.putExtra("outputFormat", "JPEG");
+////        intent.putExtra("return_data",true);
+////        intent.putExtra("noFaceDetection", true);// 取消人脸识别
+//        intent.putExtra("return-data", true);// true:不返回uri，false：返回uri
+//        startActivityForResult(intent, 120);
+//    }
+
+
 
     private void openAlbum(){//选择图片，解析函数接力intent
         Intent intent=new Intent("android.intent.action.GET_CONTENT");
@@ -134,18 +180,48 @@ public class AddShuoShuo extends AppCompatActivity {
                 break;
         }
     }
+
+//    private void startUCrop(){
+//        //裁剪后保存到文件中
+//        destinationUri = Uri.fromFile(new File(getExternalCacheDir(), "myCroppedImage.jpg"));
+//        UCrop uCrop = UCrop.of(ImageUri, destinationUri);
+//        UCrop.Options options = new UCrop.Options();
+//        //设置裁剪图片可操作的手势
+//        options.setAllowedGestures(UCropActivity.SCALE, UCropActivity.ROTATE, UCropActivity.ALL);
+//        //设置toolbar颜色
+//        options.setToolbarColor(ActivityCompat.getColor(this, R.color.orange2));
+//        //设置状态栏颜色
+//        options.setStatusBarColor(ActivityCompat.getColor(this, R.color.orange2));
+//        //是否能调整裁剪框
+//        // options.setFreeStyleCropEnabled(true);
+//        uCrop.withOptions(options);
+//        uCrop.start(this);
+//    }
+
+
+
+
+
+
+
     @Override//对于takephoto就是设置图片
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(requestCode){//startActivityResult的第二个参数
             case TAKE_PHOTO:
                 if(resultCode==RESULT_OK){
                     try{//解析uri生成BitMap对象，，，，，BItMap对象可以直接设置图片
-                        crop(ImageUri);
+//                        crop(ImageUri);
+//                        startUCrop();
+//                         ImageView picture= (ImageView) findViewById(R.id.picture);
+//                        Glide.with(this).load(ImageUri).into(picture);
+                        Log.d("AddShuoShuogetURL",ImageUri.toString());
                         Bitmap bitmap= BitmapFactory.decodeStream(getContentResolver().openInputStream(ImageUri));
                         picture.setImageBitmap(bitmap);
+
                     }catch(FileNotFoundException e){
                         e.printStackTrace();
                     }
+
 
                 }
                 break;
@@ -185,16 +261,19 @@ public class AddShuoShuo extends AppCompatActivity {
         }else if("content".equalsIgnoreCase(uri.getScheme())){
             //如果是content类型的Uri，，，，使用普通方式处理
             imagePath=getImagePath(uri,null);
-        }else if("file".equalsIgnoreCase(uri.getScheme())){
+        }else if("file".equalsIgnoreCase(uri.getScheme())) {
 
             imagePath=uri.getPath();//如果是文件类型的uri，，，直接就能够获得path，调用Uri.getPath()
         }
+        Log.d("searchCache",imagePath.toString());
+        ImagePath=imagePath;
+//        Log.d("AddShuoShuuo","ImageUri===="+ImageUri.toString());
         displayImage(imagePath);
     }
 
     private void handleImageBeforeKitKat(Intent data){//前提是安卓4.4以下，，，才能获得真正的uri 否则获得的就是封装后的uri 需要进一步转化之后才能得到绝对路径
         Uri uri=data.getData();//Intent.getData(),返回一个uri对象
-        String imagePath=getImagePath(uri,null);
+        String imagePath=getImagePath(uri, null);
         displayImage(imagePath);
     }
     private String getImagePath(Uri uri,String selection){
@@ -207,15 +286,36 @@ public class AddShuoShuo extends AppCompatActivity {
             }
             cursor.close();
         }
+        ImagePath=path;
         return path;
     }
     private void displayImage(String imagePath){//根据路径生成Bitmap对象并且设置为图片显示
         if(imagePath != null) {
-            Bitmap bitmap=BitmapFactory.decodeFile(imagePath);//有了图片真是路径调用BitmaoFactory.decodeFile(String)即可获得Bitmap对象
+            Bitmap bitmap=BitmapFactory.decodeFile(imagePath);
+
+            //有了图片真是路径调用BitmaoFactory.decodeFile(String)即可获得Bitmap对象
 //            Bitmap bitmap= BitmapFactory.decodeStream(getContentResolver().openInputStream(ImageUri));如果是uri就要调用getContentResolver.openInputStream(Uri)先获得一个stream对象，，再使用decodeStream解析来获得Bitmap对象
             picture.setImageBitmap(bitmap);
         }else{
             Toast.makeText(this,"failed to get image",Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void upload(String url,String text){
+
+//        ArrayList<Content> listObj =  (ArrayList<Content>) getIntent().getSerializableExtra("listobj");
+
+        Content content=new Content();
+        content.setImageUrl(url.toString());
+        content.setTitle(text);
+        content.save();
+        Intent intent=new Intent(AddShuoShuo.this,MainActivity.class);
+        startActivity(intent);
+
+    }
+
+
+
+
+
 }

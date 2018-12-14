@@ -18,6 +18,7 @@ import android.view.View;
 
 import com.example.shuoshuo.AddShuoShuo;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,9 +71,11 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("MainActivity","into addShuoshuo");
+                Log.d("MainActivity", "into addShuoshuo");
                 Intent intent=new Intent(MainActivity.this, AddShuoShuo.class);
+//                intent.putExtra("listobj",(Serializable)contentList);
                 startActivity(intent);
+
 
             }
         });

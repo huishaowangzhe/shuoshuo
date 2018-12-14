@@ -2,8 +2,8 @@ package com.example.shuoshuo;
 
 public class Comment {
  
-    String name; //评论者
-    String content; //评论内容
+    String name=" "; //评论者
+    String content=" "; //评论内容
  
     public Comment(){
          
