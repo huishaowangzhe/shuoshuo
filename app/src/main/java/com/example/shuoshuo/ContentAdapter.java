@@ -96,14 +96,10 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHold
         //倒序添加评论
         List<Comment>commentList=mContentList.get(position).getCommitList();
         Log.d("adapter", "commentlist=" + commentList.size());
-        holder.comment1.setText(commentList.get(commentList.size() - 1).getName() + "  " + commentList.get(commentList.size() - 1).getContent());
-        holder.comment2.setText(commentList.get(commentList.size()-2).getName()+"  "+commentList.get(commentList.size()-2).getContent());
-//        holder.comment2.setText(commentList.get(commentList.size()-2).getName()+"："+commentList.get(commentList.size()-2).getContent());
-//        holder.comment2.setText("2："+"您好");
-//        holder.comment3.setText("3："+"dhas");
-
-//        holder.contentName.setText(content.getContent());
-
+        holder.comment1.setText(commentList.get(commentList.size() - 1).getName() + "  "
+                + commentList.get(commentList.size() - 1).getContent());
+        holder.comment2.setText(commentList.get(commentList.size()-2).getName()+"  "
+                +commentList.get(commentList.size()-2).getContent());
 
     }
 
@@ -184,8 +180,10 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHold
 
                             //瞬间刷新
                             List<Comment>commentList=mContentList.get(getAdapterPosition()).getCommitList();
-                            comment1.setText(commentList.get(commentList.size() - 1).getName() + "：" + commentList.get(commentList.size() - 1).getContent());
-                            comment2.setText(commentList.get(commentList.size() - 2).getName() + "：" + commentList.get(commentList.size() - 2).getContent());
+                            comment1.setText(commentList.get(commentList.size() - 1).getName() + "："
+                                    + commentList.get(commentList.size() - 1).getContent());
+                            comment2.setText(commentList.get(commentList.size() - 2).getName() + "："
+                                    + commentList.get(commentList.size() - 2).getContent());
 
 
 

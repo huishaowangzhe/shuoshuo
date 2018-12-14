@@ -3,6 +3,7 @@ package com.example.shuoshuo;
 
 import java.io.Serializable;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,7 +21,7 @@ public class Content extends BmobObject implements Serializable {
     private List<Comment> commitList=new ArrayList<Comment>();
 
 
-    private String time=new Date().toString();
+    private String time=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
     private String name="侯金昌";
 
     Comment comment;
@@ -32,7 +33,8 @@ public class Content extends BmobObject implements Serializable {
         this.commitList.add(new Comment());
         this.commitList.add(new Comment());
     }
-    public Content(String myname,String personIcon,String  imageUrl,String title,int countZan,List<Comment> commitlist,String time,String name){
+    public Content(String myname,String personIcon,String  imageUrl,String title,
+                   int countZan,List<Comment> commitlist,String time,String name){
         this.imageUrl=imageUrl;
         this.title=title;
         this.countZan=countZan;

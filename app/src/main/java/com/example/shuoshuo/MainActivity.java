@@ -56,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         recyclerView= (RecyclerView) findViewById(R.id.recleView);
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager layoutManager =
+                new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 //        requestData();
         Bmob.initialize(this, "00957be3d6e96745186f6a436b6fe2a2");
@@ -88,7 +89,10 @@ public class MainActivity extends AppCompatActivity {
         list.add(new Comment("刘能","你傻啊"));
         list.add(new Comment("赵四","你好，我叫赵四"));
 
-        final Content content1=new Content("侯金昌","http://www.ruanyifeng.com/blogimg/asset/2016/bg2016072208.png","http://bmob-cdn-22722.b0.upaiyun.com/2018/12/07/65e5124f40dece4280eebb41355eb6ae.jpg",".Bmob(国产 移动后端服务) 数据存储 推送 短信 支付 即时通信 ",5,list,new Date().toString(),"罗3炮");
+        final Content content1=new Content("侯金昌",
+                "http://www.ruanyifeng.com/blogimg/asset/2016/bg2016072208.png",
+                "http://bmob-cdn-22722.b0.upaiyun.com/2018/12/07/65e5124f40dece4280eebb41355eb6ae.jpg",
+                ".Bmob(国产 移动后端服务) 数据存储 推送 短信 支付 即时通信 ",5,list,new Date().toString(),"罗3炮");
 //        final Content content2=new Content("houjinchang","http://bmob-cdn-22722.b0.upaiyun.com/2018/12/07/c02cefa6408abc618030f8a1d8aa3ba2.jpg",".Bmob(国产 移动后端服务) 数据存储 推送 短信 支付 即时通信 ",5, list,new Date().toString(),"罗23/9炮");
 //        final Content content3=new Content("http://bmob-cdn-22722.b0.upaiyun.com/2018/12/07/2c5d69cd40f7b92a804b12b4b7f2c6e2.jpg",".Bmob(国产 移动后端服务) 数据存储 推送 短信 支付 即时通信 ",5, Arrays.asList("pinglun2", "pingluin2", "pinglun2"),new Date().toString(),"罗887炮");
 //        final Content content4=new Content("http://bmob-cdn-22722.b0.upaiyun.com/2018/12/07/ee9be114400e79c280e941e7ecba33cd.jpg",".Bmob(国产 移动后端服务) 数据存储 推送 短信 支付 即时通信 ",5, Arrays.asList("pinglun2", "pingluin2", "pinglun2"),new Date().toString(),"罗34炮");
@@ -119,17 +123,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-
-
-
-
-    private void init(List<Content>list){
-
-    }
-
-
-
 }
